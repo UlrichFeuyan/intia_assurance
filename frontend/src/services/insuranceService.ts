@@ -1,5 +1,5 @@
 import axiosInstance from './axiosInstance';
-import { Insurance, InsuranceFormData } from '../types';
+import type { Insurance, InsuranceFormData } from '../types';
 import { API_ENDPOINTS } from '../utils/api';
 
 export const insuranceService = {

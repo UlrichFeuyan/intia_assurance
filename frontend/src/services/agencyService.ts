@@ -1,5 +1,5 @@
 import axiosInstance from './axiosInstance';
-import { Agency, AgencyFormData } from '../types';
+import type { Agency, AgencyFormData } from '../types';
 import { API_ENDPOINTS } from '../utils/api';
 
 export const agencyService = {

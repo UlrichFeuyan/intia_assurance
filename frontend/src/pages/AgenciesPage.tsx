@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import Table from '../components/Table';
 import { agencyService } from '../services/agencyService';
-import { Agency, AgencyFormData } from '../types';
+import type { Agency, AgencyFormData } from '../types';
 import { getErrorMessage } from '../utils/errorHandler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import './AgenciesPage.css';
 
 export default function AgenciesPage() {

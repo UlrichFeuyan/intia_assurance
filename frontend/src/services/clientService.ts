@@ -1,5 +1,5 @@
 import axiosInstance from './axiosInstance';
-import { Client, ClientFormData } from '../types';
+import type { Client, ClientFormData } from '../types';
 import { API_ENDPOINTS } from '../utils/api';
 
 export const clientService = {

@@ -5,9 +5,9 @@
 
 import { useState, useCallback } from 'react';
 import { authService } from '../services/authService';
-import { LoginCredentials } from '../types/auth';
+import type { LoginCredentials } from '../types/auth';
 import { getErrorMessage } from '../utils/errorHandler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 
 export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 import { getErrorMessage } from '../utils/errorHandler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import './LoginPage.css';
 
 export default function LoginPage() {

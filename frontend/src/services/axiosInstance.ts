@@ -3,7 +3,8 @@
  * Sets up HTTP client with JWT authentication and global error handling
  */
 
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance } from 'axios';
 import API_BASE_URL, {
   AUTH_TOKEN_KEY,
   TOKEN_PREFIX,

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import Table from '../components/Table';
 import { clientService } from '../services/clientService';
-import { Client, ClientFormData } from '../types';
+import type { Client, ClientFormData } from '../types';
 import { getErrorMessage } from '../utils/errorHandler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import './ClientsPage.css';
 
 export default function ClientsPage() {

@@ -3,9 +3,9 @@ import Card from '../components/Card';
 import Table from '../components/Table';
 import { insuranceService } from '../services/insuranceService';
 import { clientService } from '../services/clientService';
-import { Insurance, InsuranceFormData, Client } from '../types';
+import type { Insurance, InsuranceFormData, Client } from '../types';
 import { getErrorMessage } from '../utils/errorHandler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import './InsurancesPage.css';
 
 export default function InsurancesPage() {
