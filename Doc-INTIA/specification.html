@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTIA Assurance - Spécification de la Solution</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        .toolbar {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .export-btn:active {
+            transform: translateY(0);
+        }
+
+        .content {
+            padding: 20px 20px;
+        }
+
+        .section {
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #764ba2;
+            page-break-after: avoid;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.05em;
+            margin-top: 8px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+        }
+
+        .section p {
+            margin-bottom: 8px;
+            text-align: justify;
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .company-info {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+            font-size: 0.9em;
+        }
+
+        .company-info h3 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1em;
+        }
+
+        .company-list {
+            list-style: none;
+            margin: 8px 0 0 0;
+        }
+
+        .company-list li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.9em;
+        }
+
+        .company-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 0.9em;
+            page-break-inside: avoid;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 4px;
+            font-size: 1em;
+            page-break-after: avoid;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.3;
+        }
+
+        .modules {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 8px 0;
+            font-size: 0.9em;
+            page-break-inside: avoid;
+        }
+
+        .module-item {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e9ecef;
+            page-break-inside: avoid;
+        }
+
+        .module-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .module-item h4 {
+            color: #667eea;
+            margin-bottom: 4px;
+            font-size: 1em;
+            page-break-after: avoid;
+        }
+
+        .module-item ul {
+            list-style-position: inside;
+            color: #666;
+            margin: 0;
+            padding: 0;
+        }
+
+        .module-item li {
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #667eea;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .tech-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.9em;
+        }
+
+        .tech-item span {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.85em;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.85em;
+        }
+
+        /* Style pour l'impression */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                line-height: 1.3;
+                margin: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            .toolbar {
+                display: none;
+            }
+
+            .footer {
+                page-break-before: auto;
+                margin-top: 15px;
+                padding: 10px 20px;
+                border-top: 2px solid #e9ecef;
+            }
+
+            .header {
+                page-break-after: auto;
+                padding: 15px 20px;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 12px;
+            }
+
+            .section h2 {
+                page-break-after: avoid;
+                margin-bottom: 8px;
+            }
+
+            .section h3 {
+                page-break-after: avoid;
+                margin-bottom: 6px;
+            }
+
+            .feature-card {
+                page-break-inside: avoid;
+                margin-bottom: 8px;
+            }
+
+            .module-item {
+                page-break-inside: avoid;
+                margin-bottom: 8px;
+            }
+
+            .modules {
+                page-break-inside: avoid;
+            }
+
+            p {
+                orphans: 3;
+                widows: 3;
+                page-break-inside: avoid;
+            }
+
+            ul, ol {
+                page-break-inside: avoid;
+            }
+
+            li {
+                page-break-inside: avoid;
+            }
+
+            .section:first-of-type {
+                page-break-before: avoid;
+            }
+
+            .section {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .section > * {
+                page-break-inside: avoid;
+            }
+
+            h2 {
+                page-break-after: avoid;
+                margin-bottom: 8px;
+            }
+
+            h3 {
+                page-break-after: avoid;
+                margin-bottom: 6px;
+            }
+
+            h4 {
+                page-break-after: avoid;
+            }
+        }
+
+        .highlight {
+            background: #fffacd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .date-info {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Toolbar avec bouton d'export -->
+        <div class="toolbar">
+            <button class="export-btn" onclick="exportToPDF()">📥 Exporter en PDF</button>
+        </div>
+
+        <!-- Contenu pour l'export PDF (inclut l'header) -->
+        <div id="pdf-export">
+            <!-- Header -->
+            <div class="header">
+                <h1>🏢 INTIA Assurance</h1>
+                <p>Spécification de la Solution - Système de Gestion des Clients et Assurances</p>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="content" id="content-to-export">
+            <!-- Section 1: Vue d'ensemble -->
+            <div class="section">
+                <h2>📋 Vue d'ensemble & Objectifs</h2>
+                <p>
+                    <span class="highlight">INTIA Assurance</span> est une société spécialisée dans les services d'assurance. 
+                    La solution web centralise la gestion des clients et des contrats d'assurance pour les trois entités : 
+                    Direction Générale, INTIA-Douala et INTIA-Yaoundé.
+                </p>
+                <div class="features">
+                    <div class="feature-card">
+                        <h4>👥 Clients</h4>
+                        <p>Ajouter, modifier, supprimer et consulter les informations</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📋 Assurances</h4>
+                        <p>Gérer les contrats et polices de chaque client</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🏢 Multi-sites</h4>
+                        <p>Gérer les trois entités de l'organisation</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔐 Sécurité</h4>
+                        <p>Authentification sécurisée et autorisation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Fonctionnalités et Architecture -->
+            <div class="section">
+                <h2>⚙️ Fonctionnalités et Architecture</h2>
+                
+                <h3>Opérations principales (CRUD)</h3>
+                <div class="modules">
+                    <div class="module-item">
+                        <h4>Gestion des clients et assurances</h4>
+                        <ul>
+                            <li><strong>Créer :</strong> Enregistrer de nouveaux clients avec tous les détails</li>
+                            <li><strong>Lire :</strong> Consulter les listes et voir les détails individuels</li>
+                            <li><strong>Modifier :</strong> Mettre à jour les informations existantes</li>
+                            <li><strong>Supprimer :</strong> Archiver ou supprimer selon les règles métier</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Stack technologique</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <strong>Backend</strong>
+                        <span>Django REST</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Frontend</strong>
+                        <span>React + TypeScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Database</strong>
+                        <span>SQLite/PostgreSQL</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>HTTP Client</strong>
+                        <span>Axios</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Build</strong>
+                        <span>Vite</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Styling</strong>
+                        <span>CSS3 Responsive</span>
+                    </div>
+                </div>
+
+                <h3>Modules de l'application</h3>
+                <div class="modules">
+                    <div class="module-item">
+                        <h4>Clients & Assurances</h4>
+                        <ul>
+                            <li>Gestion complète des informations clients et polices d'assurance</li>
+                            <li>Affichage en table interactif avec actions directes</li>
+                            <li>Liaison client-assurance avec historique</li>
+                        </ul>
+                    </div>
+                    <div class="module-item">
+                        <h4>Agences & Authentification</h4>
+                        <ul>
+                            <li>Configuration multi-sites pour les trois entités</li>
+                            <li>Authentification JWT sécurisée et contrôle d'accès</li>
+                            <li>Permissions granulaires par module et agence</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Interface et Sécurité -->
+            <div class="section">
+                <h2>🎨 Interface & 🔒 Sécurité</h2>
+                
+                <h3>Interface utilisateur</h3>
+                <p>
+                    Interface intuitive, responsive et moderne avec navigation facile, tableaux de données interactifs, 
+                    formulaires validés côté client, et tableau de bord avec statistiques essentielles.
+                </p>
+
+                <h3>Sécurité & Authentification</h3>
+                <div class="modules">
+                    <div class="module-item">
+                        <h4>Authentification & Autorisation</h4>
+                        <ul>
+                            <li>Système de login sécurisé avec tokens JWT</li>
+                            <li>Contrôle d'accès basé sur rôles (RBAC)</li>
+                            <li>Restriction des données par succursale</li>
+                            <li>Chiffrement des mots de passe et protection CSRF/XSS</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Cas d'usage & Avantages -->
+            <div class="section">
+                <h2>📖 Cas d'usage & ✨ Avantages</h2>
+                
+                <h3>Scénarios d'utilisation</h3>
+                <ul style="margin-left: 15px; color: #555; font-size: 0.9em;">
+                    <li><strong>Ajouter client :</strong> Un agent enregistre un nouveau client via le formulaire intuitif</li>
+                    <li><strong>Créer assurance :</strong> Sélectionner un client et créer une nouvelle police d'assurance</li>
+                    <li><strong>Modifier agence :</strong> L'admin peut mettre à jour les coordonnées des succursales</li>
+                    <li><strong>Statistiques :</strong> Visualiser les données par succursale en temps réel</li>
+                </ul>
+
+                <h3>Bénéfices de la solution</h3>
+                <div class="features">
+                    <div class="feature-card">
+                        <h4>📊 Centralisation</h4>
+                        <p>Données unifiées</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚡ Performance</h4>
+                        <p>Interface réactive</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🌐 Accessibilité</h4>
+                        <p>Accès web 24/7</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔄 Intégration</h4>
+                        <p>API REST ouverte</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎓 Facilité</h4>
+                        <p>Formation minimale</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📈 Scalabilité</h4>
+                        <p>Prête pour croissance</p>
+                    </div>
+                </div>
+
+                <h3>Perspectives futures</h3>
+                <p style="font-size: 0.9em; margin: 8px 0;">
+                    Rapports personnalisés PDF/Excel • Notifications d'échéances • SMS/Email automatiques • 
+                    Application mobile • Analytics avec IA • Import en bulk depuis Excel
+                </p>
+
+                <p style="font-size: 0.9em; color: #666; margin-top: 8px;">
+                    La solution INTIA Assurance offre une plateforme complète et moderne pour la gestion efficace 
+                    des clients et contrats, répondant à tous les besoins de l'organisation avec flexibilité pour évolutions futures.
+                </p>
+                
+                <div class="date-info">
+                    <small>Document généré le : <strong>18 février 2026</strong></small>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 INTIA Assurance - Solution de gestion des clients et assurances</p>
+        </div>
+    </div>
+
+    <script>
+        function exportToPDF() {
+            const element = document.getElementById('pdf-export');
+            const opt = {
+                margin: [10, 10, 12, 10],
+                filename: 'INTIA_Assurance_Specification.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    logging: false
+                },
+                jsPDF: { 
+                    orientation: 'portrait', 
+                    unit: 'mm', 
+                    format: 'a4',
+                    compress: true
+                },
+                pagebreak: {
+                    mode: ['css', 'legacy'],
+                    avoid: ['tr', 'li', '.feature-card', '.module-item', 'h2', 'h3']
+                }
+            };
+
+            // Créer le PDF
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
