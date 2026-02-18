@@ -12,6 +12,9 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
+    'rest_framework.permissions.AllowAny',
+]
 
 LOG_LEVEL = "DEBUG"
 LOGGING = build_logging(LOG_LEVEL)  # noqa: F405
