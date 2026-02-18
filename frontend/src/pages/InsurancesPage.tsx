@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Card from '../components/Card';
 import Table from '../components/Table';
 import { insuranceService } from '../services/insuranceService';
-import { Insurance, InsuranceFormData } from '../types';
+import { clientService } from '../services/clientService';
+import { Insurance, InsuranceFormData, Client } from '../types';
 import { getErrorMessage } from '../utils/errorHandler';
 import { AxiosError } from 'axios';
 import './InsurancesPage.css';
 
 export default function InsurancesPage() {
   const [insurances, setInsurances] = useState<Insurance[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [clientFilter, setClientFilter] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -24,15 +27,27 @@ export default function InsurancesPage() {
     end_date: '',
   });
 
+  // Filter insurances based on selected client
+  const filteredInsurances = useMemo(() => {
+    if (clientFilter === 0) {
+      return insurances;
+    }
+    return insurances.filter((i) => i.client === clientFilter);
+  }, [insurances, clientFilter]);
+
   useEffect(() => {
-    fetchInsurances();
+    fetchData();
   }, []);
 
-  const fetchInsurances = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const data = await insuranceService.getAll();
-      setInsurances(data);
+      const [insuranceData, clientData] = await Promise.all([
+        insuranceService.getAll(),
+        clientService.getAll(),
+      ]);
+      setInsurances(insuranceData);
+      setClients(clientData);
       setError(null);
     } catch (err) {
       const message = getErrorMessage(err as AxiosError);
@@ -259,20 +274,44 @@ export default function InsurancesPage() {
       {loading && <div className="alert alert-info">Chargement des assurances...</div>}
 
       {!loading && (
-        <Card title="Liste des Assurances">
-          <Table
-            data={insurances}
-            columns={[
-              { key: 'policy_number', label: 'N° de police' },
-              { key: 'type', label: 'Type' },
-              { key: 'premium', label: 'Prime' },
-              { key: 'status', label: 'Statut' },
-              { key: 'start_date', label: 'Début' },
-              { key: 'end_date', label: 'Fin' },
-            ]}
-            onDelete={handleDelete}
-          />
-        </Card>
+        <>
+          <Card>
+            <div className="filter-section">
+              <label htmlFor="clientFilter">Filtrer par client:</label>
+              <select
+                id="clientFilter"
+                value={clientFilter}
+                onChange={(e) => setClientFilter(parseInt(e.target.value) || 0)}
+                className="filter-select"
+              >
+                <option value={0}>Tous les clients</option>
+                {clients.map((client) => (
+                  <option key={client.id} value={client.id}>
+                    {client.name}
+                  </option>
+                ))}
+              </select>
+              <span className="filter-info">
+                {filteredInsurances.length} assurance(s)
+              </span>
+            </div>
+          </Card>
+
+          <Card title="Liste des Assurances">
+            <Table
+              data={filteredInsurances}
+              columns={[
+                { key: 'policy_number', label: 'N° de police' },
+                { key: 'type', label: 'Type' },
+                { key: 'premium', label: 'Prime' },
+                { key: 'status', label: 'Statut' },
+                { key: 'start_date', label: 'Début' },
+                { key: 'end_date', label: 'Fin' },
+              ]}
+              onDelete={handleDelete}
+            />
+          </Card>
+        </>
       )}
     </div>
   );
