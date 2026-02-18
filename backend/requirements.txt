@@ -1,0 +1,4 @@
+Django==5.0.14
+djangorestframework
+djangorestframework-simplejwt
+mysqlclient

@@ -1,0 +1,8 @@
+- Use Django 5 best practices
+- Modular app design
+- No business logic inside views
+- Use ModelViewSets
+- Use serializers for validation
+- Keep code simple and readable
+- Avoid over-engineering
+- Production-ready structure
