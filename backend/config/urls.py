@@ -26,6 +26,7 @@ urlpatterns = [
     path("api/health/", health, name="api_health"),
     path("api/", include("agencies.urls")),
     path("api/", include("clients.urls")),
+    path("api/", include("insurances.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
