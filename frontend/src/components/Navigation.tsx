@@ -1,10 +1,17 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { authService } from '../services/authService';
 import './Navigation.css';
 
 export default function Navigation() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate('/login');
+  };
 
   return (
     <nav className="navigation">
@@ -45,6 +52,11 @@ export default function Navigation() {
           </Link>
         </li>
       </ul>
+      <div className="nav-footer">
+        <button className="btn-logout" onClick={handleLogout}>
+          Déconnexion
+        </button>
+      </div>
     </nav>
   );
 }
