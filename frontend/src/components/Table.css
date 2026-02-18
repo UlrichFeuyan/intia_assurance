@@ -12,7 +12,7 @@
 }
 
 .table thead {
-  background-color: #34495e;
+  background-color: var(--color-primary-dark);
   color: white;
 }
 
@@ -24,11 +24,11 @@
 
 .table td {
   padding: 12px 15px;
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .table tbody tr:hover {
-  background-color: #f8f9fa;
+  background-color: var(--color-bg-lighter);
 }
 
 .table .actions {
@@ -51,30 +51,30 @@
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: var(--color-primary);
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: var(--color-primary-dark);
 }
 
 .btn-danger {
-  background-color: #e74c3c;
+  background-color: var(--color-primary-light);
   color: white;
 }
 
 .btn-danger:hover {
-  background-color: #c0392b;
+  background-color: var(--color-primary);
 }
 
 .btn-success {
-  background-color: #27ae60;
+  background-color: var(--color-primary-light);
   color: white;
 }
 
 .btn-success:hover {
-  background-color: #229954;
+  background-color: var(--color-primary);
 }
 
 @media (max-width: 768px) {

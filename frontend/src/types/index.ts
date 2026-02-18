@@ -1,60 +1,61 @@
-// Clients
+// Clients (align with backend Client model)
 export interface Client {
   id: number;
-  name: string;
-  email: string;
+  first_name: string;
+  last_name: string;
   phone: string;
-  address: string;
-  created_at: string;
+  email: string;
+  agency: number;
+  agency_name?: string;
 }
 
 export interface ClientFormData {
-  name: string;
-  email: string;
+  first_name: string;
+  last_name: string;
   phone: string;
-  address: string;
+  email: string;
+  agency: number;
 }
 
-// Agencies
+// Agencies (align with backend Agency model)
 export interface Agency {
   id: number;
   name: string;
-  code: string;
-  address: string;
-  phone: string;
-  created_at: string;
+  city: string;
 }
 
 export interface AgencyFormData {
   name: string;
-  code: string;
-  address: string;
-  phone: string;
+  city: string;
 }
 
-// Insurances
+// Insurances (align with backend Insurance model)
 export interface Insurance {
   id: number;
-  policy_number: string;
-  client: number;
-  agency: number;
-  type: string;
-  premium: number;
-  status: string;
+  insurance_type: string;
+  amount: number;
   start_date: string;
   end_date: string;
-  created_at: string;
+  client: number;
+  agency: number;
+  client_full_name?: string;
 }
 
 export interface InsuranceFormData {
-  policy_number: string;
-  client: number;
-  agency: number;
-  type: string;
-  premium: number;
-  status: string;
+  insurance_type: string;
+  amount: number;
   start_date: string;
   end_date: string;
+  client: number;
+  agency: number;
+}
+
+// Generic paginated list response (DRF PageNumberPagination)
+export interface PaginatedList<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
 }
 
 // API Response

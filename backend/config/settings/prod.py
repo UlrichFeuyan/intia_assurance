@@ -27,6 +27,14 @@ DATABASES = {
     }
 }
 
+# CORS Configuration for Production
+CORS_ALLOWED_ORIGINS = [
+    origin.strip() 
+    for origin in os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+CORS_ALLOW_CREDENTIALS = True
+
 
 if os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS"):
     CSRF_TRUSTED_ORIGINS = [

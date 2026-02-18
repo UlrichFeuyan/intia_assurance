@@ -14,10 +14,11 @@ export default function ClientsPage() {
   const [showForm, setShowForm] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [formData, setFormData] = useState<ClientFormData>({
-    name: '',
+    first_name: '',
+    last_name: '',
     email: '',
     phone: '',
-    address: '',
+    agency: 0,
   });
 
   useEffect(() => {
@@ -57,7 +58,13 @@ export default function ClientsPage() {
     try {
       const newClient = await clientService.create(formData);
       setClients([...clients, newClient]);
-      setFormData({ name: '', email: '', phone: '', address: '' });
+      setFormData({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        agency: 0,
+      });
       setShowForm(false);
     } catch (err) {
       const message = getErrorMessage(err as AxiosError);
@@ -106,12 +113,12 @@ export default function ClientsPage() {
           <form onSubmit={handleSubmit} className="client-form">
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="name">Nom *</label>
+                <label htmlFor="last_name">Nom *</label>
                 <input
-                  id="name"
+                  id="last_name"
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="last_name"
+                  value={formData.last_name}
                   onChange={handleInputChange}
                   placeholder="Nom du client"
                   required
@@ -119,14 +126,14 @@ export default function ClientsPage() {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email *</label>
+                <label htmlFor="first_name">Prénom *</label>
                 <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
+                  id="first_name"
+                  type="text"
+                  name="first_name"
+                  value={formData.first_name}
                   onChange={handleInputChange}
-                  placeholder="Email du client"
+                  placeholder="Prénom du client"
                   required
                   disabled={formLoading}
                 />
@@ -148,14 +155,14 @@ export default function ClientsPage() {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="address">Adresse *</label>
+                <label htmlFor="agency">Agence (ID) *</label>
                 <input
-                  id="address"
-                  type="text"
-                  name="address"
-                  value={formData.address}
+                  id="agency"
+                  type="number"
+                  name="agency"
+                  value={formData.agency}
                   onChange={handleInputChange}
-                  placeholder="Adresse du client"
+                  placeholder="ID de l'agence"
                   required
                   disabled={formLoading}
                 />
@@ -190,10 +197,11 @@ export default function ClientsPage() {
           <Table
             data={clients}
             columns={[
-              { key: 'name', label: 'Nom' },
+              { key: 'last_name', label: 'Nom' },
+              { key: 'first_name', label: 'Prénom' },
               { key: 'email', label: 'Email' },
               { key: 'phone', label: 'Téléphone' },
-              { key: 'address', label: 'Adresse' },
+              { key: 'agency_name', label: 'Agence' },
             ]}
             onDelete={handleDelete}
           />

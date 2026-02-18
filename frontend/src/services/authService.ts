@@ -7,7 +7,8 @@ import axiosInstance from './axiosInstance';
 import { AUTH_TOKEN_KEY } from '../utils/api';
 import type { AuthResponse, LoginCredentials } from '../types/auth';
 
-const AUTH_ENDPOINT = '/token';
+const AUTH_ENDPOINT = '/token/';
+const REFRESH_ENDPOINT = '/token/refresh/';
 
 export const authService = {
   /**

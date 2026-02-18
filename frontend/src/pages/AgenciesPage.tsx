@@ -15,9 +15,7 @@ export default function AgenciesPage() {
   const [formLoading, setFormLoading] = useState(false);
   const [formData, setFormData] = useState<AgencyFormData>({
     name: '',
-    code: '',
-    address: '',
-    phone: '',
+    city: '',
   });
 
   useEffect(() => {
@@ -57,7 +55,7 @@ export default function AgenciesPage() {
     try {
       const newAgency = await agencyService.create(formData);
       setAgencies([...agencies, newAgency]);
-      setFormData({ name: '', code: '', address: '', phone: '' });
+      setFormData({ name: '', city: '' });
       setShowForm(false);
     } catch (err) {
       const message = getErrorMessage(err as AxiosError);
@@ -119,43 +117,14 @@ export default function AgenciesPage() {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="code">Code *</label>
+                <label htmlFor="city">Ville *</label>
                 <input
-                  id="code"
+                  id="city"
                   type="text"
-                  name="code"
-                  value={formData.code}
+                  name="city"
+                  value={formData.city}
                   onChange={handleInputChange}
-                  placeholder="Code de l'agence"
-                  required
-                  disabled={formLoading}
-                />
-              </div>
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="phone">Téléphone *</label>
-                <input
-                  id="phone"
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="Numéro de téléphone"
-                  required
-                  disabled={formLoading}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address">Adresse *</label>
-                <input
-                  id="address"
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  placeholder="Adresse de l'agence"
+                  placeholder="Ville de l'agence"
                   required
                   disabled={formLoading}
                 />
@@ -191,9 +160,7 @@ export default function AgenciesPage() {
             data={agencies}
             columns={[
               { key: 'name', label: 'Nom' },
-              { key: 'code', label: 'Code' },
-              { key: 'phone', label: 'Téléphone' },
-              { key: 'address', label: 'Adresse' },
+              { key: 'city', label: 'Ville' },
             ]}
             onDelete={handleDelete}
           />

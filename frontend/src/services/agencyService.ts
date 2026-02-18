@@ -1,11 +1,13 @@
 import axiosInstance from './axiosInstance';
-import type { Agency, AgencyFormData } from '../types';
+import type { Agency, AgencyFormData, PaginatedList } from '../types';
 import { API_ENDPOINTS } from '../utils/api';
 
 export const agencyService = {
   getAll: async () => {
-    const response = await axiosInstance.get<Agency[]>(API_ENDPOINTS.agencies);
-    return response.data;
+    const response = await axiosInstance.get<PaginatedList<Agency>>(
+      API_ENDPOINTS.agencies
+    );
+    return response.data.results;
   },
 
   getById: async (id: number) => {

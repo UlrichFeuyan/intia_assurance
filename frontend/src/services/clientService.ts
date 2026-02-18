@@ -1,11 +1,13 @@
 import axiosInstance from './axiosInstance';
-import type { Client, ClientFormData } from '../types';
+import type { Client, ClientFormData, PaginatedList } from '../types';
 import { API_ENDPOINTS } from '../utils/api';
 
 export const clientService = {
   getAll: async () => {
-    const response = await axiosInstance.get<Client[]>(API_ENDPOINTS.clients);
-    return response.data;
+    const response = await axiosInstance.get<PaginatedList<Client>>(
+      API_ENDPOINTS.clients
+    );
+    return response.data.results;
   },
 
   getById: async (id: number) => {

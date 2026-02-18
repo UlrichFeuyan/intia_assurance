@@ -1,13 +1,13 @@
 import axiosInstance from './axiosInstance';
-import type { Insurance, InsuranceFormData } from '../types';
+import type { Insurance, InsuranceFormData, PaginatedList } from '../types';
 import { API_ENDPOINTS } from '../utils/api';
 
 export const insuranceService = {
   getAll: async () => {
-    const response = await axiosInstance.get<Insurance[]>(
+    const response = await axiosInstance.get<PaginatedList<Insurance>>(
       API_ENDPOINTS.insurances
     );
-    return response.data;
+    return response.data.results;
   },
 
   getById: async (id: number) => {

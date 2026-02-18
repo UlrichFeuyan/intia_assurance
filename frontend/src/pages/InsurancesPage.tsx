@@ -17,12 +17,10 @@ export default function InsurancesPage() {
   const [showForm, setShowForm] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [formData, setFormData] = useState<InsuranceFormData>({
-    policy_number: '',
+    insurance_type: '',
     client: 0,
     agency: 0,
-    type: '',
-    premium: 0,
-    status: 'active',
+    amount: 0,
     start_date: '',
     end_date: '',
   });
@@ -64,7 +62,10 @@ export default function InsurancesPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'client' || name === 'agency' || name === 'premium' ? parseInt(value) || 0 : value,
+      [name]:
+        name === 'client' || name === 'agency' || name === 'amount'
+          ? parseInt(value) || 0
+          : value,
     }));
   };
 
@@ -77,12 +78,10 @@ export default function InsurancesPage() {
       const newInsurance = await insuranceService.create(formData);
       setInsurances([...insurances, newInsurance]);
       setFormData({
-        policy_number: '',
+        insurance_type: '',
         client: 0,
         agency: 0,
-        type: '',
-        premium: 0,
-        status: 'active',
+        amount: 0,
         start_date: '',
         end_date: '',
       });
@@ -134,27 +133,28 @@ export default function InsurancesPage() {
           <form onSubmit={handleSubmit} className="insurance-form">
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="policy_number">N° de Police *</label>
+                <label htmlFor="insurance_type">Type d'assurance *</label>
                 <input
-                  id="policy_number"
+                  id="insurance_type"
                   type="text"
-                  name="policy_number"
-                  value={formData.policy_number}
+                  name="insurance_type"
+                  value={formData.insurance_type}
                   onChange={handleInputChange}
-                  placeholder="Numéro de police"
+                  placeholder="Type d'assurance"
                   required
                   disabled={formLoading}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="type">Type *</label>
+                <label htmlFor="amount">Montant *</label>
                 <input
-                  id="type"
-                  type="text"
-                  name="type"
-                  value={formData.type}
+                  id="amount"
+                  type="number"
+                  step="0.01"
+                  name="amount"
+                  value={formData.amount}
                   onChange={handleInputChange}
-                  placeholder="Type d'assurance"
+                  placeholder="Montant de l'assurance"
                   required
                   disabled={formLoading}
                 />
@@ -187,39 +187,6 @@ export default function InsurancesPage() {
                   required
                   disabled={formLoading}
                 />
-              </div>
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="premium">Prime *</label>
-                <input
-                  id="premium"
-                  type="number"
-                  step="0.01"
-                  name="premium"
-                  value={formData.premium}
-                  onChange={handleInputChange}
-                  placeholder="Montant de la prime"
-                  required
-                  disabled={formLoading}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="status">Statut *</label>
-                <select
-                  id="status"
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                  required
-                  disabled={formLoading}
-                  style={{ padding: '10px', borderRadius: '4px', border: '1px solid #bdc3c7' }}
-                >
-                  <option value="active">Actif</option>
-                  <option value="inactive">Inactif</option>
-                  <option value="expired">Expiré</option>
-                </select>
               </div>
             </div>
 
@@ -287,7 +254,7 @@ export default function InsurancesPage() {
                 <option value={0}>Tous les clients</option>
                 {clients.map((client) => (
                   <option key={client.id} value={client.id}>
-                    {client.name}
+                    {client.last_name} {client.first_name}
                   </option>
                 ))}
               </select>
@@ -301,10 +268,9 @@ export default function InsurancesPage() {
             <Table
               data={filteredInsurances}
               columns={[
-                { key: 'policy_number', label: 'N° de police' },
-                { key: 'type', label: 'Type' },
-                { key: 'premium', label: 'Prime' },
-                { key: 'status', label: 'Statut' },
+                { key: 'insurance_type', label: 'Type' },
+                { key: 'amount', label: 'Montant' },
+                { key: 'client_full_name', label: 'Client' },
                 { key: 'start_date', label: 'Début' },
                 { key: 'end_date', label: 'Fin' },
               ]}
