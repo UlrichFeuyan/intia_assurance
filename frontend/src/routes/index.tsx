@@ -1,4 +1,8 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouteObject,
+} from 'react-router-dom';
 import { authService } from '../services/authService';
 import Layout from '../components/Layout';
 import Dashboard from '../pages/Dashboard';
@@ -8,23 +12,41 @@ import InsurancesPage from '../pages/InsurancesPage';
 import LoginPage from '../pages/LoginPage';
 
 /**
- * Protected Route
+ * Protected Route Wrapper
  * Redirects to login if user is not authenticated
  */
-function ProtectedRouteElement() {
-  if (!authService.isAuthenticated()) {
+function ProtectedLayout() {
+  const isAuthenticated = authService.isAuthenticated();
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
+
   return <Layout />;
 }
 
-export const router = createBrowserRouter([
+/**
+ * 404 Not Found Page
+ */
+function NotFound() {
+  return (
+    <div style={{ padding: '40px', textAlign: 'center' }}>
+      <h1>Page non trouvée</h1>
+      <p>La page que vous recherchez n'existe pas.</p>
+      <a href="/">Retour à l'accueil</a>
+    </div>
+  );
+}
+
+const routes: RouteObject[] = [
+  // Public route
   {
     path: '/login',
     element: <LoginPage />,
   },
+  // Protected routes
   {
-    element: <ProtectedRouteElement />,
+    element: <ProtectedLayout />,
     children: [
       {
         path: '/',
@@ -44,4 +66,11 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+  // 404 fallback
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+];
+
+export const router = createBrowserRouter(routes);

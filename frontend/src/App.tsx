@@ -3,5 +3,9 @@ import { router } from './routes';
 import './App.css';
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <div id="app">
+      <RouterProvider router={router} />
+    </div>
+  );
 }
